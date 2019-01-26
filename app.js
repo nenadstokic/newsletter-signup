@@ -3,14 +3,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
+const base64 = require('js-base64').Base64;
 
 const app = express();
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
-
-// ff5527efa08eda1758d6f080ee23a657-us19   api key
-// 71bcb56172  list id
 
 app.get("/", function(req, res){
   res.sendFile(__dirname + "/signup.html");
@@ -36,24 +34,34 @@ app.post("/", function(req, res){
 
   var jsonData = JSON.stringify(data);
 
+  var k = "Nenad " + base64.decode("OTVhZDJlZTQzMzgwMTUyOTJmZGM3ZmJhYmVhZjQ4OGQtdXMxOQ==");
+
   var options = {
       url: "https://us19.api.mailchimp.com/3.0/lists/71bcb56172",
       method: "POST",
       headers: {
-        "Authorization" : "Nenad ff5527efa08eda1758d6f080ee23a657-us19"
+        "Authorization" : k
       },
-      body: jsonData,
-
+      body: jsonData
   };
 
   request(options, function(error, response, body){
     if(error) {
-      console.log(error);
+      res.sendFile(__dirname + "/failure.html");
     } else {
-      console.log(response.statusCode);
+      if(response.statusCode === 200){
+        res.sendFile(__dirname + "/success.html");
+      } else {
+        res.sendFile(__dirname + "/failure.html");
+      }
     }
+    //console.log(response.statusCode);
   });
 
+});
+
+app.post("/failure", function(req, res){
+  res.redirect("/");
 });
 
 app.listen(3000, function(){

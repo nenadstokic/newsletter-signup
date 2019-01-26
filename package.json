@@ -11,6 +11,15 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "js-base64": "^2.5.1",
     "request": "^2.88.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nenadstokic/newsletter-signup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nenadstokic/newsletter-signup/issues"
+  },
+  "homepage": "https://github.com/nenadstokic/newsletter-signup#readme"
 }
